@@ -1,0 +1,57 @@
+import { useState } from 'react'
+
+const ToDoFunction=()=>{
+  const [tasks,setTasks]=useState([]);
+  const [taskInput,setTaskInput]=useState('');
+
+
+  const addTask=()=>{
+    if(taskInput.trim()!==''){
+      setTasks([...tasks,{text:taskInput,completed:false}]);
+      setTaskInput('');
+    }
+
+  }
+
+  const toggleTask=(index)=>{
+    const updatedTask=[...tasks];
+    updatedTask[index].completed=!updatedTask[index].completed;
+    setTasks(updatedTask);
+  }
+
+  const deleteTask=(index)=>{
+  const updatedTask=tasks.filter((_,i)=>i!==index);
+  setTasks(updatedTask);
+  }
+
+  return(
+    <div>
+    <input 
+    value={taskInput}
+    onChange={(e)=>setTaskInput(e.target.value)}
+
+/>
+<button onClick={addTask}>Add Task</button>
+    
+      <h1>To Do List</h1>
+      <ul>
+        {tasks.map((task,index)=>(
+       <li key={index}>
+        <span onClick={()=>toggleTask(index)}>
+        {index+1}.{task.completed?"✔️":"❌"}{task.text}
+        </span>
+        <button onClick={()=>deleteTask(index)}>delete</button>
+
+       </li>
+    
+        
+          
+       )) }
+         </ul>
+    </div>
+      
+
+  );
+};
+export default ToDoFunction;
+
